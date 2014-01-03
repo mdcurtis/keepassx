@@ -47,6 +47,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     m_ui->editNewPassword->setGenerator( m_generator.data() );
 
+    connect(m_ui->editNewPassword->lineEdit(), SIGNAL(textChanged(const QString &)), m_ui->checker, SLOT( checkPassword( const QString & )) );
+
     loadSettings();
     reset();
 }

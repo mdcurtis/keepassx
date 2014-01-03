@@ -158,7 +158,7 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
-set(QT_REQUIRED_MODULES QtCore QtGui QtTest)
+set(QT_REQUIRED_MODULES QtCore QtGui QtTest QtScript )
 if(UNIX AND NOT APPLE)
   set(QT_REQUIRED_MODULES ${QT_REQUIRED_MODULES} QtDBus)
 endif()

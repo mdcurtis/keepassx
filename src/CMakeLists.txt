@@ -41,6 +41,7 @@ set(keepassx_SOURCES
     core/Group.cpp
     core/ListDeleter.h
     core/Metadata.cpp
+    core/PasswordChecker.cpp
     core/PasswordGenerator.cpp
     core/qsavefile.cpp
     core/qsavefile_p.h
@@ -83,6 +84,7 @@ set(keepassx_SOURCES
     gui/EditWidgetIcons.cpp
     gui/EditWidgetProperties.cpp
     gui/FileDialog.cpp
+    gui/HeatBar.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
     gui/LineEdit.cpp
@@ -90,6 +92,7 @@ set(keepassx_SOURCES
     gui/MessageBox.cpp
     gui/PasswordGeneratorWidget.cpp
     gui/PasswordComboBox.cpp
+    gui/PasswordStrength.cpp
     gui/SettingsWidget.cpp
     gui/SortFilterHideProxyModel.cpp
     gui/UnlockDatabaseWidget.cpp
@@ -149,12 +152,14 @@ set(keepassx_MOC
     gui/EditWidget.h
     gui/EditWidgetIcons.h
     gui/EditWidgetProperties.h
+    gui/HeatBar.h
     gui/IconModels.h
     gui/KeePass1OpenWidget.h
     gui/LineEdit.h
     gui/MainWindow.h
     gui/PasswordGeneratorWidget.h
     gui/PasswordComboBox.h
+    gui/PasswordStrength.h
     gui/SettingsWidget.h
     gui/SortFilterHideProxyModel.h
     gui/UnlockDatabaseWidget.h
@@ -187,6 +192,7 @@ set(keepassx_FORMS
     gui/EditWidgetProperties.ui
     gui/MainWindow.ui
     gui/PasswordGeneratorWidget.ui
+    gui/PasswordStrength.ui
     gui/SearchWidget.ui
     gui/SettingsWidgetGeneral.ui
     gui/SettingsWidgetSecurity.ui
@@ -198,6 +204,9 @@ set(keepassx_FORMS
     gui/group/EditGroupWidgetMain.ui
 )
 
+set(keepassx_RCC
+    core/zxcvbn.qrc )
+
 if(MINGW)
   set(keepassx_SOURCES_MAINEXE
       ${keepassx_SOURCES_MAINEXE}
@@ -206,6 +215,7 @@ endif()
 
 qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
+qt4_add_resources(keepassx_SOURCES ${keepassx_RCC})
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
@@ -215,6 +225,7 @@ target_link_libraries(${PROGNAME}
                       keepassx_core
                       ${QT_QTCORE_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
+                      ${QT_QTSCRIPT_LIBRARY}
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
